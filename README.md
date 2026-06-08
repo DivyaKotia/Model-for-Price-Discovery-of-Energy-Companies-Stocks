@@ -70,4 +70,4 @@ LSTM outperformed ARIMA on non-stationary, non-linear price series, particularly
 
 ## Context
 
-Developed as part of M.Sc. Big Data Analytics research at IIM Ahmedabad. ESG data for the same set of energy companies was analysed in a companion project ([ESG Drivers of Stock Returns](../Projects/MSc.%20Project_Forecasting%20and%20ESG%20Analysis/)).
+Developed as part of work at IIM Ahmedabad. ESG data for the same set of energy companies was analysed in a companion project ([ESG Drivers of Stock Returns](../Projects/MSc.%20Project_Forecasting%20and%20ESG%20Analysis/)).
