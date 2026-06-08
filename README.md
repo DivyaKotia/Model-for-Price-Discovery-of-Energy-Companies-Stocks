@@ -1,18 +1,73 @@
-# Model-for-Price-Discovery-of-Energy-Companies-Stocks
+# LSTM vs ARIMA — Indian Energy Sector Stock Forecasting
+
+> **Comparing deep learning and classical time series models for predicting stock prices of Indian energy companies**
 
 ## Overview
-This repository presents a Long Short–Term Memory (LSTM) neural network–based framework for forecasting stock prices of energy companies, addressing the limitations of traditional time-series models in capturing nonlinear patterns and long-term dependencies
 
-## Fetaures
+This project develops and benchmarks an LSTM (Long Short-Term Memory) neural network against ARIMA for forecasting stock prices of Indian energy sector companies. The study covers both company-level and sub-sector-level forecasting across daily and monthly time horizons, using automated data acquisition via the Yahoo Finance API.
 
-LSTM-based forecasting can solve the issues that conventional time series models fail to address. For instance, long-term dependency, nonlinear pattern recognition, no requirement of stationarity, etc.
-Some of the functionalities provided by the LSTM framework prepared for the forecasting of the stock prices of the energy companies are as discussed below:
+The core motivation: traditional time series models like ARIMA assume linearity and stationarity — assumptions that stock data routinely violates. This framework tests whether LSTM's ability to capture non-linear patterns and long-range dependencies produces meaningfully better forecasts.
 
-**Company-level and sub-sector level forecasting across daily and monthly time horizons:** The framework can forecast the stock prices for individual companies as well as for aggregated sub-sectors. Also, the forecasted stock prices can be obtained for the daily data as well as for the monthly aggregated data, which enables us to understand the long-term trends as well.
+---
 
-**Automated data acquisition:** The data required for the forecasting is automatically retrieved daily using the Yahoo Finance API.
- 
-**Model optimisation and customisation:**  The model is optimised with a hyperparameter tuning process carried out using the Keras Tuner’s RandomSearch, which selects the best set of hyperparameters. Also, the model is trained separately for each company and sub-sectors, both for the daily as well as monthly data. This ensures that hyperparameter tuning is also tailored to individual company dynamics.
+## Key Features
 
-**Overfitting conditions:** To prevent the model from being overfit, certain steps were considered, like including dropout layers in the LSTM construction, stopping the training once the model stops learning significantly, which is executed by applying the concept of early stopping.
+- **Company-level & sub-sector-level forecasting** across daily and monthly horizons
+- **Automated data pipeline** — stock data retrieved daily via `yfinance`
+- **Hyperparameter tuning** using Keras Tuner's `RandomSearch`, trained separately per company
+- **Overfitting controls** — dropout layers and early stopping callbacks
+- **Evaluation metrics** — MSE, MAE, RMSE compared across LSTM and ARIMA
 
+---
+
+## Methodology
+
+```
+Data Acquisition (yfinance)
+    ↓
+Preprocessing & Stationarity Checks (ADF, KPSS)
+    ↓
+ARIMA Baseline — ACF/PACF → order selection → fit
+    ↓
+LSTM Model — Hyperparameter tuning (Keras Tuner RandomSearch)
+         — Dropout layers + Early Stopping
+    ↓
+Forecast (Daily + Monthly horizons)
+    ↓
+Evaluation — MSE / MAE / RMSE comparison
+```
+
+---
+
+## Tech Stack
+
+| Category | Tools |
+|---|---|
+| Language | Python |
+| Deep Learning | TensorFlow / Keras, Keras Tuner |
+| Time Series | statsmodels (ARIMA), Ljung-Box test |
+| Data | yfinance, pandas, NumPy |
+| Visualisation | Matplotlib |
+
+---
+
+## File Structure
+
+```
+├── Forecasting_EnergyStocksPrice.ipynb   # Main notebook: LSTM vs ARIMA comparison
+├── Download_StocksData.py                # Automated data acquisition script
+├── LICENSE
+└── README.md
+```
+
+---
+
+## Results Summary
+
+LSTM outperformed ARIMA on non-stationary, non-linear price series, particularly at the daily horizon. ARIMA remained competitive for monthly aggregated data where trends are smoother. Hyperparameter tuning was company-specific — a single global model would have underfit for companies with distinct volatility regimes.
+
+---
+
+## Context
+
+Developed as part of M.Sc. Big Data Analytics research at IIM Ahmedabad. ESG data for the same set of energy companies was analysed in a companion project ([ESG Drivers of Stock Returns](../Projects/MSc.%20Project_Forecasting%20and%20ESG%20Analysis/)).
